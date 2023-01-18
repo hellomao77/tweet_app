@@ -7,6 +7,12 @@
       <div class="post-time">
         <%= @post.created_at %>
       </div>
+      <div class="post-menus">
+        <%= link_to("編集", "/posts/#{@post.id}/edit") %>
+        <!-- postで書かれているルーティングを探すときはmethod指定 -->
+        <!-- rails7.0ではturbo-methodとしないとエラーになるみたい -->
+        <%= link_to("削除", "/posts/#{@post.id}/destroy", data: { "turbo-method": :post }) %>
+      </div>
     </div>
   </div>
 </div>
