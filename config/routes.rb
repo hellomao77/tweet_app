@@ -1,25 +1,27 @@
 Rails.application.routes.draw do
-  # topアクションへのルーティング
+  get 'users/index'
   get "/" => "home#top"
-  # aboutアクションへのルーティング
   get "about" => "home#about"
+  get "signup" => "users#new"
 
-  # indexアクションへのルーティング
   get "posts/index" => "posts#index"
-  # newアクションへのルーティング
   get "posts/new" => "posts#new"
-  # DBに変更を加えるルーティング
   post "posts/create" => "posts#create"
 
-  # showアクションへのルーティング(idごとの投稿詳細ページ)
+  # idごとの投稿詳細ページ
   get "posts/:id" => "posts#show"
-  # editアクションへのルーティング(編集機能)
+  # 編集機能
   get "posts/:id/edit" => "posts#edit"
-  # DBに変更を加えるルーティング
+  # 更新機能(DBに変更を加えるルーティング)
   post "posts/:id/update" => "posts#update"
-  # DBに変更を加えるルーティング
+  # 破棄機能(DBに変更を加えるルーティング)
   post "posts/:id/destroy" => "posts#destroy"
 
+  get "users/index" => "users#index"
+  post "users/create" => "users#create"
+  get "users/:id" => "users#show"
+  get "users/:id/edit" => "users#edit"
+  post "users/:id/update" => "users#update"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
