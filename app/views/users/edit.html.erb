@@ -7,9 +7,9 @@
         <div class="form-body">
           <!-- エラーメッセージがある場合は表示-->
           <% @user.errors.full_messages.each do |message| %>
-          <div class="form-error">
-            <%= message %>
-          </div>
+            <div class="form-error">
+              <%= message %>
+            </div>
           <% end %>
           <p>ユーザー名</p>
           <input name="name" value="<%=@user.name%>">

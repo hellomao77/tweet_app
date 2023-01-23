@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   # 全てのアクションのページが存在するわけでない
+
+  before_action :authenticate_user
   
   def index
     # 作成日時降順に表示させる

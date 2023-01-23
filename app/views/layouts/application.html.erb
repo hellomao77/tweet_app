@@ -18,21 +18,36 @@
         <%= link_to("TweetApp", "/") %>
       </div>
       <ul class="header-menus">
-        <li>
-          <%= link_to("TweetAppとは", "/about") %>
-        </li>
-        <li>
-          <%= link_to("投稿一覧", "/posts/index") %>
-        </li>
-        <li>
-          <%= link_to("新規投稿", "/posts/new") %>
-        </li>
-        <li>
-          <%= link_to("ユーザー一覧", "/users/index") %>
-        </li>
-        <li>
-          <%= link_to("新規登録", "/signup") %>
-        </li>
+        <% if @current_user %>
+          <!-- ログイン中 -->
+          <li>
+            <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
+          </li>
+          <li>
+            <%= link_to("投稿一覧", "/posts/index") %>
+          </li>
+          <li>
+            <%= link_to("新規投稿", "/posts/new") %>
+          </li>
+          <li>
+            <%= link_to("ユーザー一覧", "/users/index") %>
+          </li>
+          <li>
+            <!-- postで書かれているルーティングを探すときはmethod指定 -->
+            <%= link_to("ログアウト", "/logout", data:{"turbo-method": :post}) %>
+          </li>
+        <% else %>
+          <!-- ログアウト中 -->
+          <li>
+            <%= link_to("TweetAppとは", "/about") %>
+          </li>
+          <li>
+            <%= link_to("新規登録", "/signup") %>
+          </li>
+          <li>
+            <%= link_to("ログイン", "/login") %>
+          </li>
+        <% end %>
       </ul>
     </header>
 

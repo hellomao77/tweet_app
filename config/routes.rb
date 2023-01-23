@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
-  get 'users/index'
   get "/" => "home#top"
   get "about" => "home#about"
+  
   get "signup" => "users#new"
+  # For link_to
+  get "login" => "users#login_form"
+  # For form_tag
+  post "login" => "users#login"
+  # sessionの値を変更する場合もpost
+  post "logout" => "users#logout"
 
   get "posts/index" => "posts#index"
   get "posts/new" => "posts#new"

@@ -4,9 +4,12 @@
       <img src="<%="/user_images/#{@user.image_name}"%>">
       <h2><%= @user.name %></h2>
       <p><%= @user.email %></p>
-      <div class="user-menus">
-        <%= link_to("編集", "/users/#{@user.id}/edit") %>
-      </div>
+      <% if @user.id == @current_user.id %>
+        <!-- 詳細ページidとユーザーidが一致するときのみ編集できる -->
+        <div class="user-menus">
+          <%= link_to("編集", "/users/#{@user.id}/edit") %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
