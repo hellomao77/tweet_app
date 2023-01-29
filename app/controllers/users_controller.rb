@@ -94,4 +94,13 @@ class UsersController < ApplicationController
     flash[:notice] = "ログアウトしました"
     redirect_to("/login")
   end
+
+  def ensure_correct_user
+    # 正しいユーザーかを確かめる
+    # params[:id]は文字列型なので変換する
+    if @current_user.id != params[:id].to_i
+      flash[:notice] = "権限がありません"
+      redirect_to("/posts/index")
+    end
+  end
 end

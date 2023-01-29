@@ -1,6 +1,11 @@
 <div class="main posts-show">
   <div class="container">
     <div class="posts-show-item">
+      <div class="post-user-name">
+        <!-- ユーザーの画像を表示させる -->
+        <img src="<%= "/user_images/#{@user.image_name}" %>">
+        <%= link_to(@user.name, "/users/#{@user.id}") %>
+      </div>
       <p>
         <%= @post.content %>
       </p>
@@ -8,10 +13,12 @@
         <%= @post.created_at %>
       </div>
       <div class="post-menus">
-        <%= link_to("編集", "/posts/#{@post.id}/edit") %>
-        <!-- postで書かれているルーティングを探すときはmethod指定 -->
-        <!-- rails7.0ではturbo-methodとしないとエラーになるみたい -->
-        <%= link_to("削除", "/posts/#{@post.id}/destroy", data: { "turbo-method": :post }) %>
+        <% if @post.user_id == @current_user.id %>
+          <%= link_to("編集", "/posts/#{@post.id}/edit") %>
+          <!-- postで書かれているルーティングを探すときはmethod指定 -->
+          <!-- rails7.0ではturbo-methodとしないとエラーになるみたい -->
+          <%= link_to("削除", "/posts/#{@post.id}/destroy", data: { "turbo-method": :post }) %>
+        <% end %>
       </div>
     </div>
   </div>

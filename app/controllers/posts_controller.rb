@@ -2,6 +2,7 @@ class PostsController < ApplicationController
   # 全てのアクションのページが存在するわけでない
 
   before_action :authenticate_user
+  before_action :ensure_correct_user, {only: [:edit, :update, :destroy]}
   
   def index
     # 作成日時降順に表示させる
@@ -10,7 +11,8 @@ class PostsController < ApplicationController
 
   def show
     # params[:id]であるidの投稿データを取得して@postに保存
-    @post = Post.find_by(id:params[:id])
+    @post = Post.find_by(id: params[:id])
+    @user = @post.user
   end
 
   def new
@@ -19,7 +21,10 @@ class PostsController < ApplicationController
 
   def create
     # 投稿フォームから送信されたデータを受け取り保存する
-    @post = Post.new(content: params[:content])
+    @post = Post.new(
+      content: params[:content],
+      user_id: @current_user.id
+    )
     @post.save
     if @post.save
       # 成功時のメッセージをflashで表示する
@@ -59,5 +64,14 @@ class PostsController < ApplicationController
     flash[:notice] = "投稿を削除しました"
     # 自動的に投稿一覧ページに転送させる
     redirect_to("/posts/index")
+  end
+
+  def ensure_correct_user
+    # ログイン中のユーザーと投稿に紐づくユーザーが合致するか確かめる
+    @post = Post.find_by(id: params[:id])
+    if @current_user.id != @post.user_id
+      flash[:notice] = "権限がありません"
+      redirect_to("/posts/index")
+    end
   end
 end
